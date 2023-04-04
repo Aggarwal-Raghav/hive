@@ -42,7 +42,6 @@
         <exclude>org.apache.hadoop:*</exclude>
         <exclude>org.apache.hive.hcatalog:*</exclude>
         <exclude>org.slf4j:*</exclude>
-        <exclude>log4j:*</exclude>
         <exclude>junit:*</exclude>
         <exclude>co.cask.tephra:*</exclude>
         <exclude>commons-configuration:commons-configuration</exclude>
