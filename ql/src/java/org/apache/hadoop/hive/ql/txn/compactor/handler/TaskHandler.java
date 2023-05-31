@@ -50,7 +50,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
-import static org.apache.commons.collections.ListUtils.subtract;
+import static org.apache.commons.collections4.ListUtils.subtract;
 
 /**
  * An abstract class which defines the list of utility methods for performing cleanup activities.
