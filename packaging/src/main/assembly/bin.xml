@@ -46,7 +46,7 @@
         <exclude>log4j:*</exclude>
         <exclude>ch.qos.reload4j:*</exclude>
         <exclude>junit:*</exclude>
-        <exclude>commons-configuration:commons-configuration</exclude>
+        <exclude>org.apache.commons:commons-configuration2</exclude>
         <exclude>org.apache.hive:hive-jdbc:*:standalone</exclude>
         <exclude>org.apache.hive:hive-contrib</exclude>
       </excludes>
