@@ -60,6 +60,10 @@
           <artifactId>jasper-compiler</artifactId>
         </exclusion>
         <exclusion>
+          <groupId>org.apache.logging.log4j</groupId>
+          <artifactId>log4j-core</artifactId>
+        </exclusion>
+        <exclusion>
           <groupId>tomcat</groupId>
           <artifactId>jasper-runtime</artifactId>
         </exclusion>
@@ -83,6 +87,10 @@
       <version>${hdp.hive.version}</version>
       <scope>provided</scope>
       <exclusions>
+        <exclusion>
+          <groupId>org.apache.logging.log4j</groupId>
+          <artifactId>log4j-core</artifactId>
+        </exclusion>
         <exclusion>
           <groupId>org.codehaus.groovy</groupId>
           <artifactId>groovy-all</artifactId>
