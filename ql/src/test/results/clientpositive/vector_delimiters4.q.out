@@ -1,0 +1,66 @@
+PREHOOK: query: create EXTERNAL table `table4` as
+select
+  'bob' as name,
+  map(
+      "Map_Key1",
+        named_struct(
+            'Id',
+            'Id_Value1',
+            'Name',
+            'Name_Value1'
+        ),
+      "Map_Key2",
+        named_struct(
+            'Id',
+            'Id_Value2',
+            'Name',
+            'Name_Value2'
+        )
+  ) as testmarks
+PREHOOK: type: CREATETABLE_AS_SELECT
+PREHOOK: Input: _dummy_database@_dummy_table
+PREHOOK: Output: database:default
+PREHOOK: Output: default@table4
+POSTHOOK: query: create EXTERNAL table `table4` as
+select
+  'bob' as name,
+  map(
+      "Map_Key1",
+        named_struct(
+            'Id',
+            'Id_Value1',
+            'Name',
+            'Name_Value1'
+        ),
+      "Map_Key2",
+        named_struct(
+            'Id',
+            'Id_Value2',
+            'Name',
+            'Name_Value2'
+        )
+  ) as testmarks
+POSTHOOK: type: CREATETABLE_AS_SELECT
+POSTHOOK: Input: _dummy_database@_dummy_table
+POSTHOOK: Output: database:default
+POSTHOOK: Output: default@table4
+POSTHOOK: Lineage: table4.name SIMPLE []
+POSTHOOK: Lineage: table4.testmarks EXPRESSION []
+PREHOOK: query: select * from table4
+PREHOOK: type: QUERY
+PREHOOK: Input: default@table4
+#### A masked pattern was here ####
+POSTHOOK: query: select * from table4
+POSTHOOK: type: QUERY
+POSTHOOK: Input: default@table4
+#### A masked pattern was here ####
+bob	{"Map_Key1":{"id":"Id_Value1\u0004Name_Value1","name":null},"Map_Key2":{"id":"Id_Value2\u0004Name_Value2","name":null}}
+PREHOOK: query: select * from table4
+PREHOOK: type: QUERY
+PREHOOK: Input: default@table4
+#### A masked pattern was here ####
+POSTHOOK: query: select * from table4
+POSTHOOK: type: QUERY
+POSTHOOK: Input: default@table4
+#### A masked pattern was here ####
+bob	{"Map_Key1":{"id":"Id_Value1","name":"Name_Value1"},"Map_Key2":{"id":"Id_Value2","name":"Name_Value2"}}

@@ -1,0 +1,62 @@
+PREHOOK: query: create EXTERNAL table `table6` as
+select
+  'bob'                                           as name,
+  MAP(
+    "Key1",
+    ARRAY(
+      1,
+      2,
+      3
+    ),
+    "Key2",
+    ARRAY(
+    4,
+    5,
+    6
+    )
+  )                                               as testmarks
+PREHOOK: type: CREATETABLE_AS_SELECT
+PREHOOK: Input: _dummy_database@_dummy_table
+PREHOOK: Output: database:default
+PREHOOK: Output: default@table6
+POSTHOOK: query: create EXTERNAL table `table6` as
+select
+  'bob'                                           as name,
+  MAP(
+    "Key1",
+    ARRAY(
+      1,
+      2,
+      3
+    ),
+    "Key2",
+    ARRAY(
+    4,
+    5,
+    6
+    )
+  )                                               as testmarks
+POSTHOOK: type: CREATETABLE_AS_SELECT
+POSTHOOK: Input: _dummy_database@_dummy_table
+POSTHOOK: Output: database:default
+POSTHOOK: Output: default@table6
+POSTHOOK: Lineage: table6.name SIMPLE []
+POSTHOOK: Lineage: table6.testmarks EXPRESSION []
+PREHOOK: query: select * from table6
+PREHOOK: type: QUERY
+PREHOOK: Input: default@table6
+#### A masked pattern was here ####
+POSTHOOK: query: select * from table6
+POSTHOOK: type: QUERY
+POSTHOOK: Input: default@table6
+#### A masked pattern was here ####
+bob	{"Key1":null,"Key2":null}
+PREHOOK: query: select * from table6
+PREHOOK: type: QUERY
+PREHOOK: Input: default@table6
+#### A masked pattern was here ####
+POSTHOOK: query: select * from table6
+POSTHOOK: type: QUERY
+POSTHOOK: Input: default@table6
+#### A masked pattern was here ####
+bob	{"Key1":[1,2,3],"Key2":[4,5,6]}

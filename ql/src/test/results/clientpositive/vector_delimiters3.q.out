@@ -1,0 +1,50 @@
+PREHOOK: query: CREATE EXTERNAL TABLE `table3`(
+`name` string,
+`testmarks` array<array<struct<eng:string,math:string>>>)
+ROW FORMAT SERDE
+'org.apache.hadoop.hive.serde2.lazy.LazySimpleSerDe'
+STORED AS INPUTFORMAT
+'org.apache.hadoop.mapred.TextInputFormat'
+OUTPUTFORMAT
+'org.apache.hadoop.hive.ql.io.HiveIgnoreKeyTextOutputFormat'
+PREHOOK: type: CREATETABLE
+PREHOOK: Output: database:default
+PREHOOK: Output: default@table3
+POSTHOOK: query: CREATE EXTERNAL TABLE `table3`(
+`name` string,
+`testmarks` array<array<struct<eng:string,math:string>>>)
+ROW FORMAT SERDE
+'org.apache.hadoop.hive.serde2.lazy.LazySimpleSerDe'
+STORED AS INPUTFORMAT
+'org.apache.hadoop.mapred.TextInputFormat'
+OUTPUTFORMAT
+'org.apache.hadoop.hive.ql.io.HiveIgnoreKeyTextOutputFormat'
+POSTHOOK: type: CREATETABLE
+POSTHOOK: Output: database:default
+POSTHOOK: Output: default@table3
+PREHOOK: query: LOAD DATA LOCAL INPATH '../../data/files/data_row3.txt' INTO TABLE table3
+PREHOOK: type: LOAD
+#### A masked pattern was here ####
+PREHOOK: Output: default@table3
+POSTHOOK: query: LOAD DATA LOCAL INPATH '../../data/files/data_row3.txt' INTO TABLE table3
+POSTHOOK: type: LOAD
+#### A masked pattern was here ####
+POSTHOOK: Output: default@table3
+PREHOOK: query: select * from table3
+PREHOOK: type: QUERY
+PREHOOK: Input: default@table3
+#### A masked pattern was here ####
+POSTHOOK: query: select * from table3
+POSTHOOK: type: QUERY
+POSTHOOK: Input: default@table3
+#### A masked pattern was here ####
+bob	[[{"eng":"33","math":"44"},{"eng":"35","math":"45"}],[{"eng":"36","math":"46"}]]
+PREHOOK: query: select * from table3
+PREHOOK: type: QUERY
+PREHOOK: Input: default@table3
+#### A masked pattern was here ####
+POSTHOOK: query: select * from table3
+POSTHOOK: type: QUERY
+POSTHOOK: Input: default@table3
+#### A masked pattern was here ####
+bob	[[{"eng":"33","math":"44"},{"eng":"35","math":"45"}],[{"eng":"36","math":"46"}]]
