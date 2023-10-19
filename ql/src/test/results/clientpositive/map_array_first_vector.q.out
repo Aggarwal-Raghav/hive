@@ -1,0 +1,59 @@
+PREHOOK: query: create EXTERNAL table `map_array_table` as
+select
+  MAP(
+    "Key1",
+    ARRAY(
+      1,
+      2,
+      3
+    ),
+    "Key2",
+    ARRAY(
+    4,
+    5,
+    6
+    )
+  ) as testmarks
+PREHOOK: type: CREATETABLE_AS_SELECT
+PREHOOK: Input: _dummy_database@_dummy_table
+PREHOOK: Output: database:default
+PREHOOK: Output: default@map_array_table
+POSTHOOK: query: create EXTERNAL table `map_array_table` as
+select
+  MAP(
+    "Key1",
+    ARRAY(
+      1,
+      2,
+      3
+    ),
+    "Key2",
+    ARRAY(
+    4,
+    5,
+    6
+    )
+  ) as testmarks
+POSTHOOK: type: CREATETABLE_AS_SELECT
+POSTHOOK: Input: _dummy_database@_dummy_table
+POSTHOOK: Output: database:default
+POSTHOOK: Output: default@map_array_table
+POSTHOOK: Lineage: map_array_table.testmarks EXPRESSION []
+PREHOOK: query: select * from map_array_table
+PREHOOK: type: QUERY
+PREHOOK: Input: default@map_array_table
+#### A masked pattern was here ####
+POSTHOOK: query: select * from map_array_table
+POSTHOOK: type: QUERY
+POSTHOOK: Input: default@map_array_table
+#### A masked pattern was here ####
+{"Key1":[1,2,3],"Key2":[4,5,6]}
+PREHOOK: query: select * from map_array_table
+PREHOOK: type: QUERY
+PREHOOK: Input: default@map_array_table
+#### A masked pattern was here ####
+POSTHOOK: query: select * from map_array_table
+POSTHOOK: type: QUERY
+POSTHOOK: Input: default@map_array_table
+#### A masked pattern was here ####
+{"Key1":[1,2,3],"Key2":[4,5,6]}
