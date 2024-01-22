@@ -95,6 +95,7 @@
       <artifactId>hadoop-yarn-registry</artifactId>
       <optional>true</optional>
     </dependency>
+    <!--
     <dependency>
       <groupId>org.apache.hive</groupId>
       <artifactId>hive-druid-handler</artifactId>
@@ -106,11 +107,13 @@
       <classifier>tests</classifier>
       <scope>test</scope>
     </dependency>
+    -->
     <dependency>
       <groupId>org.apache.hive</groupId>
       <artifactId>hive-jdbc-handler</artifactId>
       <scope>test</scope>
     </dependency>
+    <!--
     <dependency>
       <groupId>org.apache.hive</groupId>
       <artifactId>kafka-handler</artifactId>
@@ -126,6 +129,7 @@
         </exclusion>
       </exclusions>
     </dependency>
+    -->
     <!-- test inter-project -->
     <dependency>
       <groupId>org.apache.hive</groupId>
