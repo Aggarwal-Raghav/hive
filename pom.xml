@@ -35,7 +35,7 @@
     <module>cli</module>
     <module>common</module>
     <module>contrib</module>
-    <module>druid-handler</module>
+    <!-- <module>druid-handler</module> -->
     <module>hbase-handler</module>
     <module>jdbc-handler</module>
     <module>hcatalog</module>
@@ -100,7 +100,6 @@
     <maven.versions.plugin.version>2.16.0</maven.versions.plugin.version>
     <maven.shade.plugin.version>3.5.0</maven.shade.plugin.version>
     <maven.surefire.plugin.version>3.0.0-M4</maven.surefire.plugin.version>
-    <maven.cyclonedx.plugin.version>2.7.10</maven.cyclonedx.plugin.version>
     <maven.license.plugin.version>2.3.0</maven.license.plugin.version>
     <!-- Library Dependency Versions -->
     <accumulo.version>1.10.1</accumulo.version>
@@ -2119,26 +2118,6 @@
           <name>hbase.version</name>
         </property>
       </activation>
-    </profile>
-    <profile>
-      <id>dist</id>
-      <build>
-        <plugins>
-          <plugin>
-            <groupId>org.cyclonedx</groupId>
-            <artifactId>cyclonedx-maven-plugin</artifactId>
-            <version>${maven.cyclonedx.plugin.version}</version>
-            <executions>
-              <execution>
-                <phase>package</phase>
-                <goals>
-                  <goal>makeBom</goal>
-                </goals>
-              </execution>
-            </executions>
-          </plugin>
-        </plugins>
-      </build>
     </profile>
   </profiles>
 </project>
