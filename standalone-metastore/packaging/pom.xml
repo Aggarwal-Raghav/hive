@@ -79,6 +79,7 @@
               </execution>
             </executions>
             <configuration>
+              <skipDownloadLicenses>true</skipDownloadLicenses>
               <includeOptional>false</includeOptional>
               <artifactFiltersUrl>${project.baseUri}/src/license/artifact-filters.txt</artifactFiltersUrl>
               <excludeTransitiveDependencies>true</excludeTransitiveDependencies>

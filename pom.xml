@@ -67,6 +67,7 @@
     <module>iceberg</module>
   </modules>
   <properties>
+    <develocity.enabled>false</develocity.enabled>
     <standalone-metastore.version>4.3.0-SNAPSHOT</standalone-metastore.version>
     <hive.version.shortname>4.3.0</hive.version.shortname>
     <!-- Build Properties -->
@@ -2262,6 +2263,7 @@
         </plugins>
       </build>
       <properties>
+        <develocity.enabled>false</develocity.enabled>
         <hadoop.bin.path>${basedir}/${hive.path.to.root}/testutils/hadoop.cmd</hadoop.bin.path>
         <!--suppress UnresolvedMavenProperty -->
         <test.extra.path>;${env.HADOOP_HOME}/bin</test.extra.path>
@@ -2275,26 +2277,6 @@
       <modules>
         <module>itests</module>
       </modules>
-    </profile>
-    <profile>
-      <id>dist</id>
-      <build>
-        <plugins>
-          <plugin>
-            <groupId>org.cyclonedx</groupId>
-            <artifactId>cyclonedx-maven-plugin</artifactId>
-            <version>${maven.cyclonedx.plugin.version}</version>
-            <executions>
-              <execution>
-                <phase>package</phase>
-                <goals>
-                  <goal>makeBom</goal>
-                </goals>
-              </execution>
-            </executions>
-          </plugin>
-        </plugins>
-      </build>
     </profile>
   </profiles>
 </project>
