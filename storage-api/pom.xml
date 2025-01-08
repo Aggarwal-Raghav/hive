@@ -37,7 +37,6 @@
     <slf4j.version>1.7.30</slf4j.version>
     <spotbugs.version>4.8.6</spotbugs.version>
     <maven.checkstyle.plugin.version>3.5.0</maven.checkstyle.plugin.version>
-    <maven.cyclonedx.plugin.version>2.7.10</maven.cyclonedx.plugin.version>
     <checkstyle.conf.dir>${basedir}/checkstyle/</checkstyle.conf.dir>
     <maven.versions.plugin.version>2.16.0</maven.versions.plugin.version>
     <maven.surefire.plugin.version>3.5.3</maven.surefire.plugin.version>
@@ -232,26 +231,6 @@
     </plugins>
   </build>
   <profiles>
-    <profile>
-      <id>dist</id>
-      <build>
-        <plugins>
-          <plugin>
-            <groupId>org.cyclonedx</groupId>
-            <artifactId>cyclonedx-maven-plugin</artifactId>
-            <version>${maven.cyclonedx.plugin.version}</version>
-            <executions>
-              <execution>
-                <phase>package</phase>
-                <goals>
-                  <goal>makeBom</goal>
-                </goals>
-              </execution>
-            </executions>
-          </plugin>
-        </plugins>
-      </build>
-    </profile>
     <profile>
       <id>spotbugs</id>
       <build>
