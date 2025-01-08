@@ -119,6 +119,7 @@
               </execution>
             </executions>
           </plugin>
+          <!--
           <plugin>
             <groupId>org.codehaus.mojo</groupId>
             <artifactId>license-maven-plugin</artifactId>
@@ -193,6 +194,7 @@
               </licenseUrlFileNameSanitizers>
             </configuration>
           </plugin>
+          -->
         </plugins>
       </build>
     </profile>
@@ -343,11 +345,11 @@
       <artifactId>hive-hbase-handler</artifactId>
       <version>${project.version}</version>
     </dependency>
-    <dependency>
-      <groupId>org.apache.hive</groupId>
-      <artifactId>hive-druid-handler</artifactId>
-      <version>${project.version}</version>
-    </dependency>
+    <!-- <dependency> -->
+    <!--   <groupId>org.apache.hive</groupId> -->
+    <!--   <artifactId>hive-druid-handler</artifactId> -->
+    <!--   <version>${project.version}</version> -->
+    <!-- </dependency> -->
     <dependency>
       <groupId>org.apache.hive</groupId>
       <artifactId>hive-iceberg-handler</artifactId>
@@ -471,6 +473,11 @@
       <groupId>org.apache.hive</groupId>
       <artifactId>hive-kudu-handler</artifactId>
       <version>${project.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>com.mysql</groupId>
+      <artifactId>mysql-connector-j</artifactId>
+      <version>9.3.0</version>
     </dependency>
   </dependencies>
 </project>
