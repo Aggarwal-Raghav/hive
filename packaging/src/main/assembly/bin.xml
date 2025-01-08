@@ -43,7 +43,7 @@
         <exclude>org.apache.hadoop:*</exclude>
         <exclude>org.apache.hive.hcatalog:*</exclude>
         <exclude>org.slf4j:*</exclude>
-        <exclude>log4j:*</exclude>
+        <!-- <exclude>log4j:*</exclude> -->
         <exclude>ch.qos.reload4j:*</exclude>
         <exclude>junit:*</exclude>
         <exclude>commons-configuration:commons-configuration</exclude>
@@ -103,7 +103,7 @@
       <excludes>
         <exclude>org.apache.hadoop:*</exclude>
         <exclude>org.apache.hive:hive-jdbc:jar:standalone</exclude>
-        <exclude>org.apache.httpcomponents:*</exclude>
+        <!-- <exclude>org.apache.httpcomponents:*</exclude> -->
       </excludes>
       <includes>
         <include>org.apache.hive.hcatalog:hive-webhcat:*</include>
@@ -240,6 +240,8 @@
       <includes>
         <include>*.template</include>
         <include>ivysettings.xml</include>
+        <include>hive-env.sh</include>
+        <include>hive-site.xml</include>
       </includes>
       <outputDirectory>conf</outputDirectory>
     </fileSet>
@@ -417,7 +419,7 @@
     <file>
       <source>${project.parent.basedir}/common/src/main/resources/hive-log4j2.properties</source>
       <outputDirectory>conf</outputDirectory>
-      <destName>hive-log4j2.properties.template</destName>
+      <destName>hive-log4j2.properties</destName>
     </file>
     <file>
       <source>${project.parent.basedir}/ql/src/main/resources/hive-exec-log4j2.properties</source>
