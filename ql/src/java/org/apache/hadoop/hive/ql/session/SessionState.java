@@ -252,6 +252,7 @@ public class SessionState implements ISessionAuthState {
   // It is a mapping from the variable name to its value.  Note that if a user repeatedly
   // changes the value of a variable, the corresponding change will be made in this mapping.
   private Map<String, String> overriddenConfigurations;
+  private Map<String, String> overriddenMetaConfigurations;
 
   private Map<String, List<String>> localMapRedErrors;
 
@@ -1864,9 +1865,17 @@ public class SessionState implements ISessionAuthState {
   public Map<String, String> getOverriddenConfigurations() {
     if (overriddenConfigurations == null) {
       // Must be deterministic order map for consistent q-test output across Java versions
-      overriddenConfigurations = new LinkedHashMap<String, String>();
+      overriddenConfigurations = new LinkedHashMap<>();
     }
     return overriddenConfigurations;
+  }
+
+  public Map<String, String> getOverriddenMetaConfigurations() {
+    if (overriddenMetaConfigurations == null) {
+      // Must be deterministic order map for consistent q-test output across Java versions
+      overriddenMetaConfigurations = new LinkedHashMap<>();
+    }
+    return overriddenMetaConfigurations;
   }
 
   public void setOverriddenConfigurations(Map<String, String> overriddenConfigurations) {

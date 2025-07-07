@@ -6094,6 +6094,16 @@ private void constructOneLBLocationMap(FileStatus fSta,
       }
       try {
         metaStoreClient = createMetaStoreClient(allowEmbedded);
+        SessionState ss = SessionState.get();
+        if (ss != null) {
+          for (Map.Entry<String, String> entry : ss.getOverriddenMetaConfigurations().entrySet()) {
+            try {
+              setMetaConf(entry.getKey(), entry.getValue());
+            } catch (HiveException e) {
+              throw new RuntimeException(e);
+            }
+          }
+        }
       } catch (RuntimeException ex) {
         Throwable t = ex.getCause();
         while (t != null) {

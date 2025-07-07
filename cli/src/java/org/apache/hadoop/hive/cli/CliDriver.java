@@ -771,6 +771,8 @@ public class CliDriver {
     for (Map.Entry<Object, Object> item : ss.cmdProperties.entrySet()) {
       conf.set((String) item.getKey(), (String) item.getValue());
       ss.getOverriddenConfigurations().put((String) item.getKey(), (String) item.getValue());
+      ss.getOverriddenMetaConfigurations().put((String) item.getKey(), (String) item.getValue());
+
     }
 
     // read prompt configuration and substitute variables.

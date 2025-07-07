@@ -207,6 +207,7 @@ public class SetProcessor implements CommandProcessor {
           return SessionState.get().getHiveVariables();
         }
       }).substitute(ss.getConf(), varValue));
+      ss.getOverriddenMetaConfigurations().put(propName, varValue);
     } else {
       nonErrorMessage = setConf(varName, varName, varValue, true);
       if (varName.equals(HiveConf.ConfVars.HIVE_SESSION_HISTORY_ENABLED.toString())) {
@@ -366,7 +367,7 @@ public class SetProcessor implements CommandProcessor {
     SessionState ss = SessionState.get();
 
     String nwcmd = command.trim();
-    if (nwcmd.equals("")) {
+    if (nwcmd.isEmpty()) {
       dumpOptions(ss.getConf().getChangedProperties());
       return new CommandProcessorResponse(getSchema(), null);
     }
