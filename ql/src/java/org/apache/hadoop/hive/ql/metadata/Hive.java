@@ -6465,6 +6465,7 @@ private void constructOneLBLocationMap(FileStatus fSta,
 
   public void setMetaConf(String propName, String propValue) throws HiveException {
     try {
+      conf.set(propName, propValue);
       getMSC().setMetaConf(propName, propValue);
     } catch (TException te) {
       throw new HiveException(te);

@@ -255,7 +255,7 @@ public class MetastoreConf {
   /**
    * User configurable Metastore vars
    */
-  private static final MetastoreConf.ConfVars[] metaConfVars = {
+  public static final MetastoreConf.ConfVars[] metaConfVars = {
       ConfVars.TRY_DIRECT_SQL,
       ConfVars.TRY_DIRECT_SQL_DDL,
       ConfVars.CLIENT_SOCKET_TIMEOUT,
