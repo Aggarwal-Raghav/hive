@@ -30,7 +30,6 @@ import java.sql.SQLException;
 public class DerbySQLConnectorProvider extends AbstractJDBCConnectorProvider {
   private static Logger LOG = LoggerFactory.getLogger(DerbySQLConnectorProvider.class);
 
-  // private static final String DRIVER_CLASS = "org.apache.derby.jdbc.EmbeddedDriver".intern();
   private static final String DRIVER_CLASS = "org.apache.derby.iapi.jdbc.AutoloadedDriver".intern();
 
   public DerbySQLConnectorProvider(String dbName, DataConnector connector) {

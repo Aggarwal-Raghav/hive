@@ -81,9 +81,8 @@ public class HiveSchemaHelper {
         throw new HiveMetaException("UserName empty ");
       }
 
-      // load required JDBC driver
-      Class.forName(driver);
-
+      // With JDBC 4+ SPI, DriverManager automatically finds the driver from the classpath
+      // using the URL.
       // Connect using the JDBC URL and user/pass from conf
       Connection conn = DriverManager.getConnection(url, userName, password);
       if (schema != null) {
@@ -92,9 +91,6 @@ public class HiveSchemaHelper {
       return conn;
     } catch (IOException | SQLException e) {
       throw new HiveMetaException("Failed to get schema version.", e);
-    } catch (ClassNotFoundException e) {
-      LOG.error("Unable to find driver class", e);
-      throw new HiveMetaException("Failed to load driver", e);
     }
   }
 

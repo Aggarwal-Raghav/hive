@@ -21,7 +21,7 @@ CREATE EXTERNAL TABLE person
 STORED BY 'org.apache.hive.storage.jdbc.JdbcStorageHandler'
 TBLPROPERTIES (
                 "hive.sql.database.type" = "DERBY",
-                "hive.sql.jdbc.driver" = "org.apache.derby.jdbc.EmbeddedDriver",
+                "hive.sql.jdbc.driver" = "org.apache.derby.iapi.jdbc.AutoloadedDriver",
                 "hive.sql.jdbc.url" = "jdbc:derby:;databaseName=${system:test.tmp.dir}/test_jdbc_join_mv;create=true;collation=TERRITORY_BASED:PRIMARY",
                 "hive.sql.dbcp.username" = "APP",
                 "hive.sql.dbcp.password" = "mine",
@@ -37,7 +37,7 @@ CREATE EXTERNAL TABLE country
     STORED BY 'org.apache.hive.storage.jdbc.JdbcStorageHandler'
     TBLPROPERTIES (
         "hive.sql.database.type" = "DERBY",
-        "hive.sql.jdbc.driver" = "org.apache.derby.jdbc.EmbeddedDriver",
+        "hive.sql.jdbc.driver" = "org.apache.derby.iapi.jdbc.AutoloadedDriver",
         "hive.sql.jdbc.url" = "jdbc:derby:;databaseName=${system:test.tmp.dir}/test_jdbc_join_mv;create=true;collation=TERRITORY_BASED:PRIMARY",
         "hive.sql.dbcp.username" = "APP",
         "hive.sql.dbcp.password" = "mine",
