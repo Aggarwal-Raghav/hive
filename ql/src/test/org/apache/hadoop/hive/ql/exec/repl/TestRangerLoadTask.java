@@ -25,7 +25,7 @@ import org.apache.hadoop.hive.ql.ErrorMsg;
 import org.apache.hadoop.hive.ql.exec.repl.ranger.RangerExportPolicyList;
 import org.apache.hadoop.hive.ql.exec.repl.ranger.RangerPolicy;
 import org.apache.hadoop.hive.ql.exec.repl.ranger.RangerRestClientImpl;
-import org.apache.hadoop.hive.ql.metadata.StringAppender;
+import org.apache.hadoop.hive.log4j.plugins.StringAppender;
 import org.apache.hadoop.hive.ql.parse.repl.metric.ReplicationMetricCollector;
 import org.apache.logging.log4j.Level;
 import org.junit.Assert;

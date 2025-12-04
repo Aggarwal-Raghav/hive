@@ -31,6 +31,13 @@
       <version>${hive.version}</version>
     </dependency>
     <dependency>
+      <groupId>org.apache.hive</groupId>
+      <artifactId>hive-log4j-plugins</artifactId>
+      <version>${project.version}</version>
+      <type>test-jar</type>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
       <groupId>org.apache.httpcomponents</groupId>
       <artifactId>httpclient</artifactId>
       <version>${httpcomponents.client.version}</version>
@@ -655,20 +662,6 @@
             </configuration>
           </execution>
         </executions>
-      </plugin>
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-compiler-plugin</artifactId>
-        <configuration>
-          <proc combine.self="override">full</proc>
-          <annotationProcessorPaths>
-            <path>
-              <groupId>org.apache.logging.log4j</groupId>
-              <artifactId>log4j-core</artifactId>
-              <version>${log4j2.version}</version>
-            </path>
-          </annotationProcessorPaths>
-        </configuration>
       </plugin>
       <!-- TODO MS-SPLIT javadoc plugin -->
       <plugin>

@@ -22,6 +22,8 @@ import java.util.regex.Pattern;
 
 import org.apache.hadoop.hive.common.LogUtils;
 import org.apache.hadoop.hive.conf.HiveConf;
+import org.apache.hadoop.hive.log4j.plugins.HushableRandomAccessFileAppender;
+import org.apache.hadoop.hive.log4j.plugins.NullAppender;
 import org.apache.hadoop.hive.ql.Driver;
 import org.apache.hadoop.hive.ql.exec.Task;
 import org.apache.hadoop.hive.ql.exec.tez.TezTask;

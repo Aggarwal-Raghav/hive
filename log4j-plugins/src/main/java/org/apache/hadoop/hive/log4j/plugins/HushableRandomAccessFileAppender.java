@@ -14,7 +14,7 @@
  * See the license for the specific language governing permissions and
  * limitations under the license.
  */
-package org.apache.hadoop.hive.ql.log;
+package org.apache.hadoop.hive.log4j.plugins;
 
 import java.io.Serializable;
 import java.util.HashMap;

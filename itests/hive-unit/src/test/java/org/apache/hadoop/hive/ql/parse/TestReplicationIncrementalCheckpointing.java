@@ -26,7 +26,7 @@ import org.apache.hadoop.hive.metastore.messaging.json.gzip.GzipJSONMessageEncod
 import org.apache.hadoop.hive.ql.exec.repl.ReplAck;
 import org.apache.hadoop.hive.ql.exec.repl.util.ReplUtils;
 import org.apache.hadoop.hive.ql.metadata.Hive;
-import org.apache.hadoop.hive.ql.metadata.StringAppender;
+import org.apache.hadoop.hive.log4j.plugins.StringAppender;
 import org.apache.hadoop.security.UserGroupInformation;
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;

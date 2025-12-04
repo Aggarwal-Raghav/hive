@@ -29,7 +29,7 @@ import org.apache.hadoop.hive.common.repl.ReplConst;
 import org.apache.hadoop.hive.common.repl.ReplScope;
 import org.apache.hadoop.hive.conf.HiveConf;
 import org.apache.hadoop.hive.ql.exec.repl.ReplAck;
-import org.apache.hadoop.hive.ql.metadata.StringAppender;
+import org.apache.hadoop.hive.log4j.plugins.StringAppender;
 import org.apache.hadoop.hive.ql.parse.repl.metric.MetricCollector;
 import org.apache.hadoop.hive.ql.parse.repl.metric.event.Metadata;
 import org.apache.hadoop.hive.ql.parse.repl.metric.event.ReplicationMetric;

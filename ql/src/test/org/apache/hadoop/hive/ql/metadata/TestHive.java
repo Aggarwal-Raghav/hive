@@ -19,7 +19,6 @@
 package org.apache.hadoop.hive.ql.metadata;
 
 import static org.apache.hadoop.hive.metastore.Warehouse.DEFAULT_DATABASE_NAME;
-import static org.junit.Assert.assertThat;
 
 import java.io.OutputStream;
 import java.util.ArrayList;
@@ -42,6 +41,7 @@ import org.apache.hadoop.fs.Path;
 import org.apache.hadoop.hive.common.TableName;
 import org.apache.hadoop.hive.conf.HiveConf;
 import org.apache.hadoop.hive.conf.HiveConf.ConfVars;
+import org.apache.hadoop.hive.log4j.plugins.StringAppender;
 import org.apache.hadoop.hive.metastore.IMetaStoreClient;
 import org.apache.hadoop.hive.metastore.MetaStoreEventListener;
 import org.apache.hadoop.hive.metastore.PartitionDropOptions;

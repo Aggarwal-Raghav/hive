@@ -16,7 +16,7 @@
  * limitations under the License.
  */
 
-package org.apache.hadoop.hive.ql.log;
+package org.apache.hadoop.hive.log4j.plugins;
 
 import java.io.IOException;
 

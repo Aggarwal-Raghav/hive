@@ -18,6 +18,8 @@
 package org.apache.hadoop.hive.ql.log;
 
 import org.apache.hadoop.hive.conf.HiveConf;
+import org.apache.hadoop.hive.log4j.plugins.HushableRandomAccessFileAppender;
+import org.apache.hadoop.hive.log4j.plugins.NullAppender;
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.core.LogEvent;

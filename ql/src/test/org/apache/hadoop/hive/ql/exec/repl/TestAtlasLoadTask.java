@@ -21,7 +21,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.apache.hadoop.fs.Path;
 import org.apache.hadoop.hive.conf.HiveConf;
 import org.apache.hadoop.hive.ql.exec.repl.atlas.AtlasReplInfo;
-import org.apache.hadoop.hive.ql.metadata.StringAppender;
+import org.apache.hadoop.hive.log4j.plugins.StringAppender;
 import org.apache.hadoop.hive.ql.parse.repl.metric.ReplicationMetricCollector;
 import org.apache.logging.log4j.Level;
 import org.junit.Assert;

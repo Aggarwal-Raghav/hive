@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-package org.apache.hadoop.hive.llap.log;
+package org.apache.hadoop.hive.log4j.plugins;
 
 import org.apache.logging.log4j.Marker;
 

@@ -61,6 +61,7 @@
     <module>standalone-metastore</module>
     <module>kafka-handler</module>
     <module>iceberg</module>
+    <module>log4j-plugins</module>
   </modules>
   <properties>
     <standalone-metastore.version>4.3.0-SNAPSHOT</standalone-metastore.version>

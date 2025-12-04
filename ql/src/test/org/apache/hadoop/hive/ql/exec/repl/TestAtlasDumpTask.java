@@ -36,7 +36,7 @@ import org.apache.hadoop.hive.ql.exec.repl.atlas.AtlasRestClient;
 import org.apache.hadoop.hive.ql.exec.repl.atlas.AtlasRestClientBuilder;
 import org.apache.hadoop.hive.ql.exec.repl.atlas.AtlasRestClientImpl;
 import org.apache.hadoop.hive.ql.exec.repl.util.ReplUtils;
-import org.apache.hadoop.hive.ql.metadata.StringAppender;
+import org.apache.hadoop.hive.log4j.plugins.StringAppender;
 import org.apache.hadoop.hive.ql.parse.SemanticException;
 import org.apache.hadoop.hive.ql.parse.repl.metric.ReplicationMetricCollector;
 import org.apache.hadoop.security.UserGroupInformation;

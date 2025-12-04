@@ -26,7 +26,7 @@ import java.util.concurrent.ConcurrentHashMap;
 
 import org.apache.hadoop.hive.conf.HiveConf;
 import org.apache.hadoop.hive.conf.HiveConfForTest;
-import org.apache.hadoop.hive.ql.log.HushableRandomAccessFileAppender;
+import org.apache.hadoop.hive.log4j.plugins.HushableRandomAccessFileAppender;
 import org.apache.hadoop.hive.ql.log.LogDivertAppender;
 import org.apache.hadoop.hive.ql.log.LogDivertAppenderForTest;
 import org.apache.hive.jdbc.miniHS2.MiniHS2;

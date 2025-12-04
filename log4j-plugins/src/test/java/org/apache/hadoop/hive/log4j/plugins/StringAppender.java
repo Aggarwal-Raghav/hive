@@ -15,7 +15,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.apache.hadoop.hive.ql.metadata;
+package org.apache.hadoop.hive.log4j.plugins;
 
 import java.io.ByteArrayOutputStream;
 import java.io.OutputStream;

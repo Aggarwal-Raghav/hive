@@ -22,7 +22,7 @@ import java.util.concurrent.TimeUnit;
 
 import org.apache.hadoop.fs.Path;
 import org.apache.hadoop.hive.llap.LlapNodeId;
-import org.apache.hadoop.hive.llap.log.Log4jQueryCompleteMarker;
+import org.apache.hadoop.hive.log4j.plugins.Log4jQueryCompleteMarker;
 import org.apache.hadoop.hive.llap.log.LogHelpers;
 import org.apache.hadoop.hive.llap.metrics.LlapMetricsSystem;
 import org.apache.hadoop.hive.llap.metrics.ReadWriteLockMetrics;

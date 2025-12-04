@@ -15,11 +15,10 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.apache.hadoop.hive.ql.log;
+package org.apache.hadoop.hive.log4j.plugins;
 
 import static org.junit.Assert.assertEquals;
 
-import org.apache.hadoop.hive.ql.metadata.StringAppender;
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
