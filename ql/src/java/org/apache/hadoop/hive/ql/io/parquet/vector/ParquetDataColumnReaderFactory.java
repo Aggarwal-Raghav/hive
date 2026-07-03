@@ -18,6 +18,7 @@
 
 package org.apache.hadoop.hive.ql.io.parquet.vector;
 
+import org.apache.hadoop.hive.common.type.Date;
 import org.apache.hadoop.hive.common.type.HiveBaseChar;
 import org.apache.hadoop.hive.common.type.HiveDecimal;
 import org.apache.hadoop.hive.common.type.Timestamp;
@@ -1934,6 +1935,66 @@ public final class ParquetDataColumnReaderFactory {
     }
   }
 
+  /**
+   * Reads Parquet string bytes for Date column ("2024-07-09") and converts them to long (days since
+   * epoch)
+   */
+  public static class TypesFromStringToDatePageReader extends TypesFromStringPageReader {
+    /**
+     * A cache to pre-calculate string-to-date conversions for dictionary encoded pages.
+     *
+     * <p>'parquet.dictionary.page.size' defaults to 1MB. If a column has too many unique values,
+     * Parquet automatically disables the dictionary (isDict = false) and falls back to the
+     * ValuesReader flow. Therefore, a 1MB dictionary holds at most ~100,000 date strings (10 bytes
+     * each). This guarantees our long[] cache will never exceed ~800 KB, and the boolean[] ~100 KB!
+     */
+    private long[] dictDateCache;
+    private boolean[] dictDateCacheValid;
+
+    public TypesFromStringToDatePageReader(ValuesReader realReader, int length) {
+      super(realReader, length);
+    }
+
+    public TypesFromStringToDatePageReader(Dictionary dict, int length) {
+      super(dict, length);
+      int maxId = dict.getMaxId();
+      // IDs are zero-indexed
+      dictDateCache = new long[maxId + 1];
+      dictDateCacheValid = new boolean[maxId + 1];
+      for (int i = 0; i <= maxId; i++) {
+        dictDateCache[i] = parseDateString(dict.decodeToBinary(i).getBytesUnsafe());
+        dictDateCacheValid[i] = isValid;
+      }
+    }
+
+    @Override
+    public long readLong() {
+      return parseDateString(valuesReader.readBytes().getBytesUnsafe());
+    }
+
+    @Override
+    public long readLong(int id) {
+      isValid = dictDateCacheValid[id];
+      return dictDateCache[id];
+    }
+
+    private long parseDateString(byte[] bytes) {
+      if (bytes == null) {
+        isValid = false;
+        return 0;
+      }
+      try {
+        String s = new String(bytes, StandardCharsets.UTF_8);
+        long epochDay = Date.valueOf(s).toEpochDay();
+        isValid = true;
+        return epochDay;
+      } catch (Exception e) {
+        isValid = false;
+        return 0;
+      }
+    }
+  }
+
   private static ParquetDataColumnReader getDataColumnReaderByTypeHelper(boolean isDictionary,
                                                                          PrimitiveType parquetType,
                                                                          TypeInfo hiveType,
@@ -2021,13 +2082,26 @@ public final class ParquetDataColumnReaderFactory {
     }
   }
 
+  /**
+   * Finds the right reader for Parquet string and binary data (BINARY and FIXED_LEN_BYTE_ARRAY).
+   *
+   * <p>This method handles cases where the Parquet data type doesn't perfectly match the
+   * Hive data type (like reading a Parquet String as a Hive Date). This is incredibly important
+   * during Vectorized MapJoins, because if we don't convert the data into the exact format Hive
+   * expects, it can crash the query with a ClassCastException.
+   *
+   * @param isDict True if the Parquet page uses dictionary encoding
+   * @param parquetType The primitive type from the Parquet schema
+   * @param hiveType The expected Hive TypeInfo
+   * @param valuesReader The fallback values reader if dictionary is not used
+   * @param dictionary The dictionary reader
+   * @return A configured ParquetDataColumnReader
+   */
   private static ParquetDataColumnReader getConvertorFromBinary(boolean isDict,
                                                                 PrimitiveType parquetType,
                                                                 TypeInfo hiveType,
                                                                 ValuesReader valuesReader,
                                                                 Dictionary dictionary) {
-    LogicalTypeAnnotation logicalType = parquetType.getLogicalTypeAnnotation();
-
     // max length for varchar and char cases
     int length = getVarcharLength(hiveType);
     TypeInfo realHiveType = (hiveType instanceof ListTypeInfo) ?
@@ -2042,12 +2116,20 @@ public final class ParquetDataColumnReaderFactory {
     int hiveScale = (typeName.equalsIgnoreCase(serdeConstants.DECIMAL_TYPE_NAME)) ?
         ((DecimalTypeInfo) realHiveType).getScale() : 0;
 
+    LogicalTypeAnnotation logicalType = parquetType.getLogicalTypeAnnotation();
+
     if (logicalType == null) {
-      return isDict ? new DefaultParquetDataColumnReader(dictionary, length) : new
-          DefaultParquetDataColumnReader(valuesReader, length);
+      // Check if we need to convert the string into a specific Hive type (like DATE)
+      ParquetDataColumnReader reader =
+          getReaderForString(realHiveType, isDict, dictionary, valuesReader, length);
+      return reader != null
+          ? reader
+          : (isDict
+              ? new DefaultParquetDataColumnReader(dictionary, length)
+              : new DefaultParquetDataColumnReader(valuesReader, length));
     }
 
-    Optional<ParquetDataColumnReader> reader = parquetType.getLogicalTypeAnnotation()
+    Optional<ParquetDataColumnReader> reader = logicalType
         .accept(new LogicalTypeAnnotationVisitor<>() {
           @Override public Optional<ParquetDataColumnReader> visit(
               DecimalLogicalTypeAnnotation logicalTypeAnnotation) {
@@ -2062,18 +2144,48 @@ public final class ParquetDataColumnReaderFactory {
 
           @Override public Optional<ParquetDataColumnReader> visit(
               StringLogicalTypeAnnotation logicalTypeAnnotation) {
-            return isDict ? Optional
-                .of(new TypesFromStringPageReader(dictionary, length)) : Optional
-                .of(new TypesFromStringPageReader(valuesReader, length));
+            // Only try to find a specialized reader (like for DATE) right when we actually need it.
+            // If we don't find one, we just fall back to reading it as a normal string.
+            ParquetDataColumnReader reader = getReaderForString(
+                realHiveType, isDict, dictionary, valuesReader, length);
+            return Optional.of(reader != null ? reader :
+                (isDict
+                 ? new TypesFromStringPageReader(dictionary, length)
+                 : new TypesFromStringPageReader(valuesReader, length)));
           }
         });
 
-    if (reader.isPresent()) {
-      return reader.get();
-    }
+    // If the visitor above didn't find a reader (e.g. for unsupported logical types),
+    // default to a standard binary reader.
+    return reader.orElseGet(
+        () ->
+            isDict
+                ? new DefaultParquetDataColumnReader(dictionary, length)
+                : new DefaultParquetDataColumnReader(valuesReader, length));
+  }
 
-    return isDict ? new DefaultParquetDataColumnReader(dictionary, length) : new
-      DefaultParquetDataColumnReader(valuesReader, length);
+  /**
+   * Returns a specialized reader if we need to convert Parquet string bytes into a specific Hive
+   * data type (like DATE).
+   *
+   * <p>If the type doesn't need special string conversion, it simply returns null. This makes it
+   * easy to add support for other data types in the future if they also need to be converted from
+   * strings during vectorized reads.
+   */
+  private static ParquetDataColumnReader getReaderForString(TypeInfo hiveType,
+      boolean isDict, Dictionary dictionary, ValuesReader valuesReader, int length) {
+    if (!(hiveType instanceof PrimitiveTypeInfo)) {
+      return null;
+    }
+    return switch (((PrimitiveTypeInfo) hiveType).getPrimitiveCategory()) {
+      case DATE -> isDict
+          ? new TypesFromStringToDatePageReader(dictionary, length)
+          : new TypesFromStringToDatePageReader(valuesReader, length);
+      case STRING, VARCHAR, CHAR -> isDict
+          ? new TypesFromStringPageReader(dictionary, length)
+          : new TypesFromStringPageReader(valuesReader, length);
+      default -> null;
+    };
   }
 
   public static ParquetDataColumnReader getDataColumnReaderByTypeOnDictionary(

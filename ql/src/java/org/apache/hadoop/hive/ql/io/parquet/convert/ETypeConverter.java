@@ -16,6 +16,7 @@ package org.apache.hadoop.hive.ql.io.parquet.convert;
 import java.math.BigDecimal;
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
+import java.nio.charset.StandardCharsets;
 import java.time.ZoneId;
 import java.time.ZoneOffset;
 import java.util.ArrayList;
@@ -24,6 +25,7 @@ import java.util.Optional;
 import java.util.TimeZone;
 
 import com.google.common.base.MoreObjects;
+import org.apache.hadoop.hive.common.type.Date;
 import org.apache.hadoop.hive.common.type.HiveDecimal;
 import org.apache.hadoop.hive.common.type.Timestamp;
 import org.apache.hadoop.hive.conf.HiveConf;
@@ -523,6 +525,18 @@ public enum ETypeConverter {
               @Override
               protected HiveVarcharWritable convert(Binary binary) {
                 return new HiveVarcharWritable(binary.getBytes(), ((VarcharTypeInfo) hiveTypeInfo).getLength());
+              }
+            };
+          case DATE:
+            return new BinaryConverter<DateWritableV2>(type, parent, index) {
+              @Override
+              protected DateWritableV2 convert(Binary binary) {
+                String s = new String(binary.getBytes(), StandardCharsets.UTF_8);
+                try {
+                  return new DateWritableV2(Date.valueOf(s));
+                } catch (IllegalArgumentException e) {
+                  return null;
+                }
               }
             };
         }
